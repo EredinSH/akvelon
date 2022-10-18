@@ -1,35 +1,40 @@
 package com.interview.task.domain;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.interview.task.repository.Container;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
+@Getter
+@Setter
+@NoArgsConstructor
+@Component
+public class Bottle implements Container  {
 
-public class Bottle {
+    private double volume;
 
-    private Long id;
-    private int volume;
-
-    public Bottle() {
-    }
-
-    public Bottle(Long id, int volume) {
-        this.id = id;
+    public Bottle(double volume) {
         this.volume = volume;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public String pour(Bottle bottle, double quantity) {
+        String result;
+        if(quantity == 0) {
+            result = "Lack od water!";
+        } else if (quantity <= bottle.getVolume()) {
+            double howManyPour = bottle.getVolume() - quantity;
+            String s = Double.toString(howManyPour);
+            result = "You can still pour " + s + "l";
+        } else if (quantity > bottle.getVolume()) {
+            String s = Double.toString(bottle.getVolume());
+            result = "You can't pour that much water! Bottle has only " + s + "l";
+        } else {
+            result = "You entered incorrect data";
+        }
+
+        return result;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
 }

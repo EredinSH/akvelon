@@ -1,31 +1,39 @@
 package com.interview.task.domain;
 
-public class Man {
+import com.interview.task.repository.Drink;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-    private Long id;
-    private int stomachVolume;
+@Getter
+@Setter
+@NoArgsConstructor
+@Component
+public class Man implements Drink {
 
-    public Man() {
-    }
+    private double stomachVolume;
 
-    public Man(Long id, int stomachVolume) {
-        this.id = id;
+    public Man(double stomachVolume) {
         this.stomachVolume = stomachVolume;
     }
 
-    public Long getId() {
-        return id;
+    public String haveDrink(Man man, Bottle bottle) {
+        String result;
+        if(bottle.getVolume() == 0) {
+            result = "You didn't drink anything!";
+        } else if (bottle.getVolume() <=  man.getStomachVolume()) {
+            double howManyDrink = man.getStomachVolume() - bottle.getVolume();
+            String s = Double.toString(howManyDrink);
+            result = "You have a drunk, you can still drink " + s + "l";
+        } else if (bottle.getVolume() > man.getStomachVolume()) {
+            result = "You can't drink that much!";
+        } else {
+            result = "You entered incorrect data";
+        }
+
+        return result;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public int getStomachVolume() {
-        return stomachVolume;
-    }
-
-    public void setStomachVolume(int stomachVolume) {
-        this.stomachVolume = stomachVolume;
-    }
 }
