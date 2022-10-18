@@ -1,6 +1,6 @@
 package com.interview.task.domain;
 
-import com.interview.task.repository.Container;
+import com.interview.task.interfaces.Container;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
